@@ -1,0 +1,25 @@
+#ifndef RW_T_
+#define RW_T_
+
+#include "ro_t"
+
+struct rw_t : ro_t
+{
+    template<typename reg_type>
+    static void write(volatile reg_type *device,
+                      unsigned int position,
+                      reg_type mask,
+                      reg_type value)
+    {
+        *device = (*device & ~mask) | ((value << position) & mask);
+    }
+
+    template<typename reg_type>
+    static void write(volatile reg_type *device,
+                      reg_type value)
+    {
+        *device = value;
+    }
+};
+
+#endif // RW_T_

@@ -1,0 +1,46 @@
+#ifndef REG_T_
+#define REG_T_
+
+#include <cstddef>
+#include <limits>
+
+#include "generate_mask"
+#include "rw_t"
+#include "ro_t"
+#include "wo_t"
+
+template<typename mut_t, typename reg_type, size_t addr, unsigned int width, unsigned int position>
+struct reg_t
+{
+    static_assert(width > 0, "zero width");
+    static_assert(width + position <= std::numeric_limits<reg_type>::digits, "width overflow");
+    static_assert((addr & (alignof(reg_type)-1)) == 0, "alignment error");
+
+    static reg_type read()
+    {
+        if (width == std::numeric_limits<reg_type>::digits)
+        {
+            return mut_t::read(reinterpret_cast<const volatile reg_type*>(addr));
+        }
+        else
+        {
+            return mut_t::read(reinterpret_cast<const volatile reg_type*>(addr),
+                position, generate_mask<reg_type>(width, position));
+        }
+    }
+
+    static void write(reg_type val)
+    {
+        if (width == std::numeric_limits<reg_type>::digits)
+        {
+            mut_t::write(reinterpret_cast<volatile reg_type*>(addr), val);
+        }
+        else
+        {
+            mut_t::write(reinterpret_cast<volatile reg_type*>(addr),
+                position, generate_mask<reg_type>(width, position), val);
+        }
+    }
+};
+
+#endif // REG_T_

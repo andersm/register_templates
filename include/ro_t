@@ -1,0 +1,21 @@
+#ifndef RO_T
+#define RO_T
+
+struct ro_t
+{
+    template<typename reg_type>
+    static reg_type read(const volatile reg_type *device,
+                         unsigned int position,
+                         reg_type mask)
+    {
+        return (*device & mask) >> position;
+    }
+
+    template<typename reg_type>
+    static reg_type read(const volatile reg_type *device)
+    {
+        return *device;
+    }
+};
+
+#endif // RO_T_

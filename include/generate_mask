@@ -1,0 +1,15 @@
+#ifndef GENERATE_MASK_
+#define GENERATE_MASK_
+
+template<typename reg_type>
+constexpr reg_type generate_mask(unsigned int width, unsigned int position)
+{
+    reg_type mask = 0;
+
+    for (unsigned int w = 0; w < width; w++)
+        mask = 1u | mask << 1;
+
+    return mask << position;
+}
+
+#endif // GENERATE_MASK_
