@@ -1,5 +1,5 @@
 # register_templates
-C++11 templates for register access, based on [Ken Smith's talk at CppCon 2015](https://github.com/kensmith/cppmmio).
+C++11 templates for register access, based on [Ken Smith's talk at CppCon 2014](https://github.com/kensmith/cppmmio) ([video](https://www.youtube.com/watch?v=lrrQaa_-hzU)).
 
 Usage example:
 
