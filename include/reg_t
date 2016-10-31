@@ -18,28 +18,14 @@ struct reg_t
 
     static reg_type read()
     {
-        if (width == std::numeric_limits<reg_type>::digits)
-        {
-            return mut_t::read(reinterpret_cast<const volatile reg_type*>(addr));
-        }
-        else
-        {
-            return mut_t::read(reinterpret_cast<const volatile reg_type*>(addr),
-                position, generate_mask<reg_type>(width, position));
-        }
+        return mut_t::read(reinterpret_cast<const volatile reg_type*>(addr),
+            position, generate_mask<reg_type>(width, position));
     }
 
     static void write(reg_type val)
     {
-        if (width == std::numeric_limits<reg_type>::digits)
-        {
-            mut_t::write(reinterpret_cast<volatile reg_type*>(addr), val);
-        }
-        else
-        {
-            mut_t::write(reinterpret_cast<volatile reg_type*>(addr),
-                position, generate_mask<reg_type>(width, position), val);
-        }
+        mut_t::write(reinterpret_cast<volatile reg_type*>(addr),
+            position, generate_mask<reg_type>(width, position), val);
     }
 };
 

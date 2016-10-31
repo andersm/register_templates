@@ -11,13 +11,6 @@ struct wo_t
     {
         *device = ((value << position) & mask);
     }
-
-    template<typename reg_type>
-    static void write(volatile reg_type *device,
-                      reg_type value)
-    {
-        *device = value;
-    }
 };
 
 #endif // WO_T_
